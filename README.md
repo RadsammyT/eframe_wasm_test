@@ -1,3 +1,9 @@
+# note to self
+
+Caching is a fuck
+
+Make sure caching for both localhost and github pages are both wiped. they will cause problems.
+
 # eframe template
 
 [![dependency status](https://deps.rs/repo/github/emilk/eframe_template/status.svg)](https://deps.rs/repo/github/emilk/eframe_template)
