@@ -1,6 +1,6 @@
 var cacheName = 'egui-template-pwa';
 var filesToCache = [
-  './',
+  './hort.png',
 
 ];
 

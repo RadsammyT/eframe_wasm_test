@@ -77,10 +77,10 @@ impl eframe::App for PersonalWeb {
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             egui::menu::bar(ui, |ui| {
                 ui.horizontal(|ui| {
-                    if ui.button("State1").clicked() {
+                    if ui.button("About Me").clicked() {
                         self.state_index = 1;
                     }
-                    if ui.button("State2").clicked() {
+                    if ui.button("Images").clicked() {
                         self.state_index = 2;
                     }
 
@@ -99,21 +99,15 @@ impl eframe::App for PersonalWeb {
                 1 => {
                     ui.vertical_centered(|ui| ui.heading("Welcome"));
                     
-                        ui.vertical(|ui| {
-                            ui.horizontal(|ui| {
-                                // if ui.add(egui::ImageButton::new(self.images.image_03.as_ref()
-                                //     .unwrap()
-                                //     .texture_id(ctx), Vec2::new(50.0, 50.0)))
-                                //     .on_hover_text_at_pointer("Enter my github")
-                                //     .clicked() {
-                                //         if webbrowser::open("https://github.com/RadsammyT?tab=repositories").is_ok() {};
-                                
-                                
-                                //     }
-                                ez_button(ui, ctx, &self.images.image_03, "My Github!", "https://github.com/RadsammyT?tab=repositories", 
-                                Vec2::new(100.0, 100.0));
-                            });
+                    ui.vertical(|ui| {
+                        ui.horizontal(|ui| {
+
+                            ez_button(ui, ctx, &self.images.image_03, "My Github!", "https://github.com/RadsammyT?tab=repositories", 
+                            Vec2::new(100.0, 100.0));
+                            ui.label("I do things on there, be it coding in general or just simply fucking about.");
+
                         });
+                    });
                     
                 }
                 
