@@ -24,9 +24,11 @@ impl Default for PersonalWeb {
 
 
 struct Images { //Images that are seen throughout the app
-    image_01: Option<egui_extras::RetainedImage>,
-    image_02: Option<egui_extras::RetainedImage>,
-    image_03: Option<egui_extras::RetainedImage>,
+    reddit: Option<egui_extras::RetainedImage>,
+    hort: Option<egui_extras::RetainedImage>,
+    git_logo: Option<egui_extras::RetainedImage>,
+    middle_man: Option<egui_extras::RetainedImage>,
+
 }
 
 
@@ -34,9 +36,10 @@ struct Images { //Images that are seen throughout the app
 impl Default for Images {
     fn default() -> Self {
         return Self {
-            image_01: Some(egui_extras::image::RetainedImage::from_image_bytes("test", include_bytes!("../assets/icon-256.png")).unwrap()),
-            image_02: Some(egui_extras::image::RetainedImage::from_image_bytes("image2", include_bytes!("../assets/hort.png")).unwrap()),
-            image_03: Some(egui_extras::image::RetainedImage::from_image_bytes("image2", include_bytes!("../assets/git.png")).unwrap()),
+            reddit: Some(egui_extras::image::RetainedImage::from_image_bytes("reddit", include_bytes!("../assets/reddit.png")).unwrap()),
+            hort: Some(egui_extras::image::RetainedImage::from_image_bytes("hort", include_bytes!("../assets/hort.png")).unwrap()),
+            git_logo: Some(egui_extras::image::RetainedImage::from_image_bytes("gitlogo", include_bytes!("../assets/git.png")).unwrap()),
+            middle_man: Some(egui_extras::image::RetainedImage::from_image_bytes("middleman", include_bytes!("../assets/favicon.ico")).unwrap()),
         };
     }
 }
@@ -80,11 +83,12 @@ impl eframe::App for PersonalWeb {
                     if ui.button("About Me").clicked() {
                         self.state_index = 1;
                     }
-                    if ui.button("Images").clicked() {
+                    if ui.button("images/shitpost").clicked() {
                         self.state_index = 2;
                     }
 
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
+                        egui::warn_if_debug_build(ui);
                         ui.label(RichText::new("Always do CTRL + F5!").italics().underline().strong().color(Color32::RED));
                     });
                 });
@@ -101,19 +105,34 @@ impl eframe::App for PersonalWeb {
                     
                     ui.vertical(|ui| {
                         ui.horizontal(|ui| {
-
-                            ez_button(ui, ctx, &self.images.image_03, "My Github!", "https://github.com/RadsammyT?tab=repositories", 
+                            ez_button(ui, ctx, &self.images.git_logo, "My Github!", "https://github.com/RadsammyT?tab=repositories", 
                             Vec2::new(100.0, 100.0));
                             ui.label("I do things on there, be it coding in general or just simply fucking about.");
+                        });
+                    });
 
+                    ui.vertical(|ui| {
+                        ui.horizontal(|ui| {
+                            ez_button(ui, ctx, &self.images.reddit, "reddit", "https://www.reddit.com/user/RadsammyT", 
+                            Vec2::new(100.0, 100.0));
+                            ui.label("I lurk and sometimes post things there.");
                         });
                     });
                     
                 }
                 
                 2 => {
-                    self.images.image_01.as_ref().unwrap().show(ui);
-                    self.images.image_02.as_ref().unwrap().show(ui);
+                    ui.horizontal(|ui| {
+                        for _ in 0..5 {
+                            self.images.hort.as_ref().unwrap().show(ui);
+                        }
+                    });
+
+                    ui.vertical_centered(|ui| {
+                        self.images.middle_man.as_ref().unwrap().show(ui);
+                    });
+                    ui.label(RichText::new("what da heeeeeeeeeeell what da heeeeeeeeeeeeeeeeeeeell what da heeeeeeeeell").strong());
+
                 }
 
                 _ => {
