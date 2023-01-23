@@ -118,7 +118,7 @@ impl eframe::App for PersonalWeb {
                 2 => {
                     ui.horizontal(|ui| {
                         for _ in 0..5 {
-                            self.images.hort.as_ref().unwrap().show_scaled(ui, 0.88);
+                            self.images.hort.as_ref().unwrap().show_scaled(ui, self.image_scale);
                         }
                     });
 
@@ -126,6 +126,7 @@ impl eframe::App for PersonalWeb {
                         self.images.middle_man.as_ref().unwrap().show(ui);
                     });
                     ui.label(RichText::new("what da heeeeeeeeeeell what da heeeeeeeeeeeeeeeeeeeell what da heeeeeeeeell").strong());
+                    ui.add(egui::Slider::new(&mut self.image_scale, 0.00..=1.30));
 
                 }
 
