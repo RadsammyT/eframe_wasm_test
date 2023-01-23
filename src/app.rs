@@ -10,7 +10,9 @@ pub struct PersonalWeb {
     // Example stuff:
     state_index: i32,
     #[serde(skip)]
-    images: Images
+    images: Images,
+
+    image_scale: f32,
 }
 
 impl Default for PersonalWeb {
@@ -18,6 +20,7 @@ impl Default for PersonalWeb {
         Self {
             state_index: 1,
             images: Images::default(),
+            image_scale: 1.0,
         }
     }
 }
@@ -86,6 +89,10 @@ impl eframe::App for PersonalWeb {
                     if ui.button("images/shitpost").clicked() {
                         self.state_index = 2;
                     }
+                    ui.add_space(15.0);
+
+                    image_hyperlink_button(ui, ctx, &self.images.git_logo, "My Github", "https://github.com/RadsammyT?tab=repositories",Vec2::new(20.0, 20.0));
+                    image_hyperlink_button(ui, ctx, &self.images.reddit, "My Reddit", "https://www.reddit.com/user/RadsammyT",Vec2::new(20.0, 20.0));
 
                     ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
                         egui::warn_if_debug_build(ui);
@@ -101,30 +108,17 @@ impl eframe::App for PersonalWeb {
         egui::CentralPanel::default().show(ctx, |ui| {
             match self.state_index {
                 1 => {
-                    ui.vertical_centered(|ui| ui.heading("Welcome"));
-                    
-                    ui.vertical(|ui| {
-                        ui.horizontal(|ui| {
-                            ez_button(ui, ctx, &self.images.git_logo, "My Github!", "https://github.com/RadsammyT?tab=repositories", 
-                            Vec2::new(100.0, 100.0));
-                            ui.label("I do things on there, be it coding in general or just simply fucking about.");
-                        });
-                    });
-
-                    ui.vertical(|ui| {
-                        ui.horizontal(|ui| {
-                            ez_button(ui, ctx, &self.images.reddit, "reddit", "https://www.reddit.com/user/RadsammyT", 
-                            Vec2::new(100.0, 100.0));
-                            ui.label("I lurk and sometimes post things there.");
-                        });
+                    ui.vertical_centered(|ui| { 
+                        ui.heading("Welcome");
                     });
                     
+                    ui.label("todo: Put things here");
                 }
                 
                 2 => {
                     ui.horizontal(|ui| {
                         for _ in 0..5 {
-                            self.images.hort.as_ref().unwrap().show(ui);
+                            self.images.hort.as_ref().unwrap().show_scaled(ui, 0.88);
                         }
                     });
 
@@ -147,7 +141,7 @@ impl eframe::App for PersonalWeb {
     }
 }
 
-pub fn ez_button(ui: &mut Ui, ctx: &egui::Context, image: &Option<RetainedImage>, text: &str, link: &str, vec: Vec2) {
+pub fn image_hyperlink_button(ui: &mut Ui, ctx: &egui::Context, image: &Option<RetainedImage>, text: &str, link: &str, vec: Vec2) {
     if ui.add(egui::ImageButton::new(image.as_ref()
     .unwrap()
     .texture_id(ctx), vec))
