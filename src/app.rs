@@ -84,17 +84,24 @@ impl eframe::App for PersonalWeb {
 
         egui::TopBottomPanel::top("top_panel").show(ctx, |ui| {
             egui::menu::bar(ui, |ui| {
-                ui.horizontal(|ui| {
-                    if ui.button("About Me").clicked() {
-                        self.state_index = 1;
-                    }
-                    if ui.button("images/shitpost").clicked() {
-                        self.state_index = 2;
-                    }
-                    if ui.button("config").clicked() {
-                        self.state_index = 3;
-                    }
-                    ui.add_space(15.0);
+                ui.vertical(|ui| {
+                    ui.horizontal(|ui| {
+                        if ui.button("About Me").clicked() {
+                            self.state_index = 1;
+                        }
+                        if ui.button("images/shitpost").clicked() {
+                            self.state_index = 2;
+                        }
+                        
+                    });
+                    ui.horizontal(|ui| {
+                        if ui.button("config").clicked() {
+                            self.state_index = 3;
+                        }
+
+                    });
+                });
+                ui.horizontal_top(|ui| {
 
                     image_hyperlink_button(ui, ctx, &self.images.git_logo, "My Github", "https://github.com/RadsammyT?tab=repositories",Vec2::new(self.icon_scale, self.icon_scale));
                     image_hyperlink_button(ui, ctx, &self.images.reddit, "My Reddit", "https://www.reddit.com/user/RadsammyT",Vec2::new(self.icon_scale, self.icon_scale));
@@ -141,7 +148,7 @@ impl eframe::App for PersonalWeb {
 
                     ui.horizontal(|ui| {
                         ui.label("self.icon_scale");
-                        ui.add(egui::Slider::new(&mut self.icon_scale, 10.00..=30.00));
+                        ui.add(egui::Slider::new(&mut self.icon_scale, 10.00..=40.00));
                     });
 
                 }
